@@ -16,3 +16,17 @@ Route::get('/', function () {
 });
 
 Route::resource('workouts','WorkoutController');
+
+// Route::get('/workouts', index());
+
+// Route::get('/workouts/create', create());
+
+// Route::post('workouts', store());
+
+// Route::get('/workouts/{workout}', show());
+
+// Route::get('workouts/{workout}/edit', edit());
+
+// Route::put('/workouts/{workout}', update());
+
+// Route::delete('/workouts/{workout}', destroy());

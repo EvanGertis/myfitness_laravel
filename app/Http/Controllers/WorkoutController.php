@@ -70,7 +70,8 @@ class WorkoutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $workout = Workout::find($id);
+        return view('workouts.edit', compact('workout'));
     }
 
     /**
@@ -82,7 +83,18 @@ class WorkoutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'reps'=> 'required',
+            'exercise'=>'required'
+        ]);
+
+        $workout = Workout::find($id);
+        $workout->reps = $request->get('reps');
+        $workout->exercise = $request->get('exercise');
+
+        $workout->save();
+
+        return redirect('/workouts')->with('success', 'Workout updated!');
     }
 
     /**
@@ -93,6 +105,9 @@ class WorkoutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $workout = Workout::find($id);
+        $workout->delete();
+
+        return redirect('/workouts')->with('success', 'Workout deleted!');
     }
 }
