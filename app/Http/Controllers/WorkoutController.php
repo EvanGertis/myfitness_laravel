@@ -14,7 +14,9 @@ class WorkoutController extends Controller
      */
     public function index()
     {
-        //
+        $workouts = Workout::all();
+
+        return view('workouts.index', compact('workouts'));
     }
 
     /**
