@@ -28,7 +28,8 @@
         @foreach($workouts as $workout)
         <tr>
             <td>{{$workout->id}}</td>
-            <td>{{$workout->reps}} {{$workout->exercise}}</td>
+            <td>{{$workout->reps}}</td>
+            <td>{{$workout->exercise}}</td>
             <td>
                 <a href="{{ route('workouts.edit',$workout->id)}}" class="btn btn-primary">Edit</a>
             </td>
