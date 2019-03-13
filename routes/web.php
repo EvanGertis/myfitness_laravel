@@ -27,3 +27,10 @@ Route::resource('workouts','WorkoutController');
 // Route::put('/workouts/{workout}', update());
 
 // Route::delete('/workouts/{workout}', destroy());
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
