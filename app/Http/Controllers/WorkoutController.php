@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use DB;
+
 use App\Workout;
+use App\User_Workout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -12,11 +16,14 @@ class WorkoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $workouts = Workout::all();
-
-        return view('workouts.index', compact('workouts'));
+        if (Auth::check()) {
+            $workouts = DB::select('SELECT id,reps, exercise FROM workouts w INNER JOIN (SELECT workout_id FROM user__workouts uw INNER JOIN users u ON ? = uw.user_id GROUP BY workout_id) r ON r.workout_id = w.id;', [$request->user()->id]);
+            return view('workouts.index', ['workouts'=> $workouts]);
+        } else {
+            return redirect('/login');
+        }
     }
 
     /**
@@ -53,7 +60,17 @@ class WorkoutController extends Controller
                 'exercise'=> $request->get('exercise')
             ]);
 
+           
+
             $workout->save();
+
+            $user_workout = new User_Workout([
+                'user_id' => $request->user()->id,
+                'workout_id' => $workout->id
+            ]);
+
+            $user_workout->save();
+            
             return redirect('/workouts')->with('success', 'Workout saved!');
         } else {
             return redirect('/login');
